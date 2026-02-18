@@ -1,0 +1,60 @@
+{
+  "name": "volt-logger",
+  "version": "1.0.0",
+  "description": "Structured logger for real-time infrastructure — lightweight, type-safe, OCPP-aware. Works standalone or with ocpp-ws-io.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohittiwari-dev/volt-logger"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "logger",
+    "structured-logging",
+    "iot",
+    "ocpp",
+    "ev-charging",
+    "websocket",
+    "type-safe",
+    "middleware",
+    "transformer",
+    "alerting",
+    "redaction",
+    "volt-logger"
+  ],
+  "author": "Rohit Tiwari <rohit@rohittiwari.me>",
+  "homepage": "https://github.com/rohittiwari-dev/volt-logger#readme",
+  "bugs": {
+    "url": "https://github.com/rohittiwari-dev/volt-logger/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@paralleldrive/cuid2": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}
