@@ -1,10 +1,10 @@
 /**
- * @module voltlog
+ * @module volt-logger
  * @description Sampling middleware — rate-limits logs per key to avoid flooding.
  *
  * @example
  * ```ts
- * import { createLogger, consoleTransport, samplingMiddleware } from 'voltlog';
+ * import { createLogger, consoleTransport, samplingMiddleware } from 'volt-logger';
  *
  * const logger = createLogger({
  *   transports: [consoleTransport()],

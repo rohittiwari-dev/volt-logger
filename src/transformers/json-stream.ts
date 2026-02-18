@@ -1,12 +1,12 @@
 /**
- * @module voltlog
+ * @module volt-logger
  * @description JSON stream transformer — writes newline-delimited JSON to any writable stream.
  * Useful for file logging, piping to external tools, etc.
  *
  * @example Write to file
  * ```ts
  * import { createWriteStream } from 'node:fs';
- * import { createLogger, jsonStreamTransport } from 'voltlog';
+ * import { createLogger, jsonStreamTransport } from 'volt-logger';
  *
  * const logger = createLogger({
  *   transports: [

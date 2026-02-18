@@ -1,11 +1,11 @@
 /**
- * @module voltlog
+ * @module volt-logger
  * @description Console transformer — outputs structured JSON logs to console.
  * Works in Node.js, browsers, and all runtimes.
  *
  * @example
  * ```ts
- * import { createLogger, consoleTransport } from 'voltlog';
+ * import { createLogger, consoleTransport } from 'volt-logger';
  *
  * const logger = createLogger({
  *   transports: [consoleTransport()],

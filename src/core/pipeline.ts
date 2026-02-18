@@ -1,5 +1,5 @@
 /**
- * @module voltlog
+ * @module volt-logger
  * @description Pipeline — middleware composition and transformer fan-out.
  */
 

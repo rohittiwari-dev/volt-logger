@@ -1,5 +1,5 @@
 /**
- * @module voltlog
+ * @module volt-logger
  *
  * OCPP-aware structured logger — lightweight, type-safe, framework-agnostic.
  *
@@ -7,7 +7,7 @@
  *
  * @example Standalone
  * ```ts
- * import { createLogger, consoleTransport } from 'voltlog';
+ * import { createLogger, consoleTransport } from 'volt-logger';
  *
  * const logger = createLogger({
  *   level: 'INFO',
@@ -24,8 +24,8 @@
  *
  * @example OCPP exchange logging
  * ```ts
- * import { createLogger, prettyTransport, ocppMiddleware } from 'voltlog';
- * import type { OcppExchangeMeta } from 'voltlog';
+ * import { createLogger, prettyTransport, ocppMiddleware } from 'volt-logger';
+ * import type { OcppExchangeMeta } from 'volt-logger';
  *
  * const logger = createLogger<OcppExchangeMeta>({
  *   transports: [prettyTransport()],
@@ -43,7 +43,7 @@
  *
  * @example Alerting
  * ```ts
- * import { createLogger, consoleTransport, alertMiddleware } from 'voltlog';
+ * import { createLogger, consoleTransport, alertMiddleware } from 'volt-logger';
  *
  * const logger = createLogger({
  *   transports: [consoleTransport()],
@@ -63,7 +63,7 @@
  *
  * @example Webhook for AI/automation
  * ```ts
- * import { createLogger, webhookTransport } from 'voltlog';
+ * import { createLogger, webhookTransport } from 'volt-logger';
  *
  * const logger = createLogger({
  *   transports: [
@@ -78,8 +78,8 @@
  *
  * @example Custom transformer (save to database)
  * ```ts
- * import { createLogger } from 'voltlog';
- * import type { Transformer } from 'voltlog';
+ * import { createLogger } from 'volt-logger';
+ * import type { Transformer } from 'volt-logger';
  *
  * const dbTransformer: Transformer = {
  *   name: 'postgres',

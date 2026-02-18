@@ -2,7 +2,7 @@
 
 #### Structured logger for real-time infrastructure
 
-[![npm version](https://img.shields.io/npm/v/voltlog?color=blue)](https://www.npmjs.com/package/voltlog)
+[![npm version](https://img.shields.io/npm/v/volt-logger?color=blue)](https://www.npmjs.com/package/volt-logger)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build & Test](https://github.com/rohittiwari-dev/volt-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/rohittiwari-dev/volt-logger/actions)
 
@@ -26,11 +26,11 @@ It’s built to solve the common pain points of generic loggers in event-driven 
 ## 📦 Installation
 
 ```bash
-npm install voltlog
+npm install volt-logger
 # or
-bun add voltlog
-pnpm add voltlog
-yarn add voltlog
+bun add volt-logger
+pnpm add volt-logger
+yarn add volt-logger
 ```
 
 ---
@@ -40,7 +40,7 @@ yarn add voltlog
 ### Basic Usage
 
 ```ts
-import { createLogger, consoleTransport } from "voltlog";
+import { createLogger, consoleTransport } from "volt-logger";
 
 const logger = createLogger({
   level: "INFO",
@@ -56,7 +56,7 @@ logger.info("Server started", { port: 3000, env: "production" });
 Use `prettyTransport` to get readable, colored logs with icons during development.
 
 ```ts
-import { createLogger, prettyTransport } from "voltlog";
+import { createLogger, prettyTransport } from "volt-logger";
 
 const logger = createLogger({
   level: "DEBUG",
@@ -100,7 +100,7 @@ connLogger.warn("High latency");
 Automatically scrub sensitive fields before they hit your logs. Essential for GDPR/security compliance.
 
 ```ts
-import { createLogger, consoleTransport, redactionMiddleware } from "voltlog";
+import { createLogger, consoleTransport, redactionMiddleware } from "volt-logger";
 
 const logger = createLogger({
   transports: [consoleTransport()],
@@ -123,7 +123,7 @@ logger.info("User login", {
 In high-throughput systems (like OCPP servers handling thousands of chargers), `DEBUG` logs can be overwhelming and expensive to store. Use sampling to log only a fraction of them.
 
 ```ts
-import { createLogger, consoleTransport, samplingMiddleware } from "voltlog";
+import { createLogger, consoleTransport, samplingMiddleware } from "volt-logger";
 
 const logger = createLogger({
   level: "DEBUG",
@@ -295,7 +295,7 @@ You can easily write your own middleware to enrich, filter, or transform logs. M
 
 ```ts
 import { os } from "node:os";
-import { createLogger, createMiddleware, consoleTransport } from "voltlog";
+import { createLogger, createMiddleware, consoleTransport } from "volt-logger";
 
 const machineInfoMiddleware = createMiddleware((entry, next) => {
   // Add hostname to every log
@@ -319,7 +319,7 @@ const logger = createLogger({
 ### Example: Filtering Logs
 
 ```ts
-import { createMiddleware } from "voltlog";
+import { createMiddleware } from "volt-logger";
 
 const filterMiddleware = createMiddleware((entry, next) => {
   // Drop logs containing specific text
