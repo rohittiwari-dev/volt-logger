@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment (please complete the following information):**
 
 - Node.js Version: [e.g. 18.16.0]
-- volt-logger Version: [e.g. 1.0.0]
+- voltlog-io Version: [e.g. 1.0.0]
 - OS: [e.g. Windows 10]
 
 **Additional context**

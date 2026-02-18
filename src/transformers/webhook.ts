@@ -1,11 +1,11 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Webhook transformer — sends log entries to external HTTP endpoints.
  * Supports batching for performance.
  *
  * @example
  * ```ts
- * import { createLogger, webhookTransport } from 'volt-logger';
+ * import { createLogger, webhookTransport } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   transports: [

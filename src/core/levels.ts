@@ -1,5 +1,5 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Log level utilities — filtering, comparison, resolution.
  */
 

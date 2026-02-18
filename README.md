@@ -2,9 +2,9 @@
 
 #### Structured logger for real-time infrastructure
 
-[![npm version](https://img.shields.io/npm/v/volt-logger?color=blue)](https://www.npmjs.com/package/volt-logger)
+[![npm version](https://img.shields.io/npm/v/voltlog-io?color=blue)](https://www.npmjs.com/package/voltlog-io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build & Test](https://github.com/rohittiwari-dev/volt-logger/actions/workflows/ci.yml/badge.svg)](https://github.com/rohittiwari-dev/volt-logger/actions)
+[![Build & Test](https://github.com/rohittiwari-dev/voltlog-io/actions/workflows/ci.yml/badge.svg)](https://github.com/rohittiwari-dev/voltlog-io/actions)
 
 **VoltLog** is a modern, lightweight, and type-safe structured logger designed specifically for high-throughput, real-time systems like IoT platforms, WebSocket servers (OCPP), and microservices.
 
@@ -26,11 +26,11 @@ It’s built to solve the common pain points of generic loggers in event-driven 
 ## 📦 Installation
 
 ```bash
-npm install volt-logger
+npm install voltlog-io
 # or
-bun add volt-logger
-pnpm add volt-logger
-yarn add volt-logger
+bun add voltlog-io
+pnpm add voltlog-io
+yarn add voltlog-io
 ```
 
 ---
@@ -40,7 +40,7 @@ yarn add volt-logger
 ### Basic Usage
 
 ```ts
-import { createLogger, consoleTransport } from "volt-logger";
+import { createLogger, consoleTransport } from "voltlog-io";
 
 const logger = createLogger({
   level: "INFO",
@@ -56,7 +56,7 @@ logger.info("Server started", { port: 3000, env: "production" });
 Use `prettyTransport` to get readable, colored logs with icons during development.
 
 ```ts
-import { createLogger, prettyTransport } from "volt-logger";
+import { createLogger, prettyTransport } from "voltlog-io";
 
 const logger = createLogger({
   level: "DEBUG",
@@ -100,7 +100,7 @@ connLogger.warn("High latency");
 Automatically scrub sensitive fields before they hit your logs. Essential for GDPR/security compliance.
 
 ```ts
-import { createLogger, consoleTransport, redactionMiddleware } from "volt-logger";
+import { createLogger, consoleTransport, redactionMiddleware } from "voltlog-io";
 
 const logger = createLogger({
   transports: [consoleTransport()],
@@ -123,7 +123,7 @@ logger.info("User login", {
 In high-throughput systems (like OCPP servers handling thousands of chargers), `DEBUG` logs can be overwhelming and expensive to store. Use sampling to log only a fraction of them.
 
 ```ts
-import { createLogger, consoleTransport, samplingMiddleware } from "volt-logger";
+import { createLogger, consoleTransport, samplingMiddleware } from "voltlog-io";
 
 const logger = createLogger({
   level: "DEBUG",
@@ -295,7 +295,7 @@ You can easily write your own middleware to enrich, filter, or transform logs. M
 
 ```ts
 import { os } from "node:os";
-import { createLogger, createMiddleware, consoleTransport } from "volt-logger";
+import { createLogger, createMiddleware, consoleTransport } from "voltlog-io";
 
 const machineInfoMiddleware = createMiddleware((entry, next) => {
   // Add hostname to every log
@@ -319,7 +319,7 @@ const logger = createLogger({
 ### Example: Filtering Logs
 
 ```ts
-import { createMiddleware } from "volt-logger";
+import { createMiddleware } from "voltlog-io";
 
 const filterMiddleware = createMiddleware((entry, next) => {
   // Drop logs containing specific text

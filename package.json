@@ -1,10 +1,10 @@
 {
-  "name": "volt-logger",
+  "name": "voltlog-io",
   "version": "1.0.0",
   "description": "Structured logger for real-time infrastructure — lightweight, type-safe, OCPP-aware. Works standalone or with ocpp-ws-io.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rohittiwari-dev/volt-logger"
+    "url": "https://github.com/rohittiwari-dev/voltlog-io"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -39,13 +39,12 @@
     "middleware",
     "transformer",
     "alerting",
-    "redaction",
-    "volt-logger"
+    "redaction"
   ],
   "author": "Rohit Tiwari <rohit@rohittiwari.me>",
-  "homepage": "https://github.com/rohittiwari-dev/volt-logger#readme",
+  "homepage": "https://github.com/rohittiwari-dev/voltlog-io#readme",
   "bugs": {
-    "url": "https://github.com/rohittiwari-dev/volt-logger/issues"
+    "url": "https://github.com/rohittiwari-dev/voltlog-io/issues"
   },
   "license": "MIT",
   "dependencies": {

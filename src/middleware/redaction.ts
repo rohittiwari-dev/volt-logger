@@ -1,10 +1,10 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Redaction middleware — auto-redacts sensitive fields from log meta and context.
  *
  * @example
  * ```ts
- * import { createLogger, consoleTransport, redactionMiddleware } from 'volt-logger';
+ * import { createLogger, consoleTransport, redactionMiddleware } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   transports: [consoleTransport()],

@@ -1,11 +1,11 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description OCPP enrichment middleware — auto-enriches log entries with OCPP metadata.
  *
  * @example
  * ```ts
- * import { createLogger, consoleTransport, ocppMiddleware } from 'volt-logger';
- * import type { OcppExchangeMeta } from 'volt-logger';
+ * import { createLogger, consoleTransport, ocppMiddleware } from 'voltlog-io';
+ * import type { OcppExchangeMeta } from 'voltlog-io';
  *
  * const logger = createLogger<OcppExchangeMeta>({
  *   transports: [consoleTransport()],

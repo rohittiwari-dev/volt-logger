@@ -1,10 +1,10 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Batch wrapper — wraps any transformer with buffering and periodic flushing.
  *
  * @example
  * ```ts
- * import { createLogger, batchTransport, consoleTransport } from 'volt-logger';
+ * import { createLogger, batchTransport, consoleTransport } from 'voltlog-io';
  *
  * // Batch console output: flush every 100 entries or every 2 seconds
  * const logger = createLogger({

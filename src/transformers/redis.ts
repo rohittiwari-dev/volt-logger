@@ -1,5 +1,5 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Redis Streams transformer — publishes log entries to a Redis Stream.
  * Users can then subscribe (XREAD/XREADGROUP) for real-time dashboards, monitoring, etc.
  *
@@ -8,7 +8,7 @@
  * @example Basic
  * ```ts
  * import Redis from 'ioredis';
- * import { createLogger, redisTransport } from 'volt-logger';
+ * import { createLogger, redisTransport } from 'voltlog-io';
  *
  * const redis = new Redis();
  * const logger = createLogger({

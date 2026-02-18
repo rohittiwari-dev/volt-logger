@@ -1,10 +1,10 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Alert middleware — evaluates configurable rules and fires callbacks.
  *
  * @example
  * ```ts
- * import { createLogger, consoleTransport, alertMiddleware } from 'volt-logger';
+ * import { createLogger, consoleTransport, alertMiddleware } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   transports: [consoleTransport()],

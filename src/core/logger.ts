@@ -1,10 +1,10 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Core Logger class — zero external dependencies (only cuid2), runtime-agnostic.
  *
  * @example Basic usage
  * ```ts
- * import { createLogger, consoleTransport } from 'volt-logger';
+ * import { createLogger, consoleTransport } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   level: 'INFO',
@@ -307,7 +307,7 @@ class ChildLoggerImpl<
  *
  * @example Full options
  * ```ts
- * import { createLogger, consoleTransport, prettyTransport } from 'volt-logger';
+ * import { createLogger, consoleTransport, prettyTransport } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   level: 'DEBUG',
@@ -319,8 +319,8 @@ class ChildLoggerImpl<
  *
  * @example OCPP-aware with child loggers
  * ```ts
- * import { createLogger, prettyTransport } from 'volt-logger';
- * import type { OcppExchangeMeta } from 'volt-logger';
+ * import { createLogger, prettyTransport } from 'voltlog-io';
+ * import type { OcppExchangeMeta } from 'voltlog-io';
  *
  * const logger = createLogger<OcppExchangeMeta>({
  *   level: 'INFO',

@@ -1,5 +1,5 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Type definitions for the OCPP-aware structured logger.
  */
 

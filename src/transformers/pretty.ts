@@ -1,10 +1,10 @@
 /**
- * @module volt-logger
+ * @module voltlog-io
  * @description Pretty transformer — human-readable colored output with OCPP exchange formatting.
  *
  * @example Dev mode
  * ```ts
- * import { createLogger, prettyTransport } from 'volt-logger';
+ * import { createLogger, prettyTransport } from 'voltlog-io';
  *
  * const logger = createLogger({
  *   transports: [prettyTransport()],
