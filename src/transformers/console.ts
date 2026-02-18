@@ -62,6 +62,8 @@ export function consoleTransport(
         console.error(output);
       } else if (entry.level >= LogLevel.WARN) {
         console.warn(output);
+      } else if (entry.level >= LogLevel.INFO) {
+        console.info(output);
       } else if (entry.level >= LogLevel.DEBUG) {
         console.debug(output);
       } else {

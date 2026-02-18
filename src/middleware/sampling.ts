@@ -32,6 +32,10 @@ export interface SamplingOptions<TMeta = Record<string, unknown>> {
   maxPerWindow?: number;
   /** Time window in ms (default: 60000 = 1 minute) */
   windowMs?: number;
+  /** Probability to keep a log (0 to 1). Default: 1 (keep all) */
+  sampleRate?: number;
+  /** Logs at this level or higher always pass. Default: 40 (WARN) */
+  priorityLevel?: number;
 }
 
 interface BucketEntry {
@@ -48,9 +52,24 @@ export function samplingMiddleware<TMeta = Record<string, unknown>>(
   const keyFn = options.keyFn ?? ((entry: LogEntry<TMeta>) => entry.message);
   const maxPerWindow = options.maxPerWindow ?? 100;
   const windowMs = options.windowMs ?? 60_000;
+  const sampleRate = options.sampleRate ?? 1;
+  // Default priority to WARN (40) so INFO (30) gets sampled/limited
+  const priorityLevel = options.priorityLevel ?? 40;
+
   const buckets = new Map<string, BucketEntry>();
 
   return (entry: LogEntry<TMeta>, next) => {
+    // 1. High priority logs always pass
+    if (entry.level >= priorityLevel) {
+      return next(entry);
+    }
+
+    // 2. Probabilistic Sampling
+    if (sampleRate < 1 && Math.random() > sampleRate) {
+      return; // Dropped
+    }
+
+    // 3. Rate Limiting
     const key = keyFn(entry);
     const now = entry.timestamp;
 
@@ -60,17 +79,18 @@ export function samplingMiddleware<TMeta = Record<string, unknown>>(
       buckets.set(key, bucket);
     }
 
-    bucket.count++;
-
-    if (bucket.count <= maxPerWindow) {
+    if (bucket.count < maxPerWindow) {
+      bucket.count++;
       next(entry);
     }
-    // else: entry is dropped (sampled out)
+    // else: Dropped (rate limited)
 
-    // Periodic cleanup: remove stale buckets
-    if (buckets.size > 10_000) {
+    // Periodic cleanup (simple heuristic)
+    if (buckets.size > 2000) {
+      // ... cleanup logic ...
+      const expireBefore = now - windowMs * 2;
       for (const [k, b] of buckets) {
-        if (now - b.windowStart >= windowMs * 2) {
+        if (b.windowStart < expireBefore) {
           buckets.delete(k);
         }
       }

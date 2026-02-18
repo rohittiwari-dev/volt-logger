@@ -129,6 +129,7 @@ export {
   type OcppMiddlewareOptions,
 } from "./middleware/ocpp.js";
 export { alertMiddleware } from "./middleware/alert.js";
+export { createMiddleware } from "./middleware/create-middleware.js";
 
 // ─── Transformers ────────────────────────────────────────────────
 export {
