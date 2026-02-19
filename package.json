@@ -1,6 +1,6 @@
 {
   "name": "voltlog-io",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Structured logger for real-time infrastructure — lightweight, type-safe, OCPP-aware. Works standalone or with ocpp-ws-io.",
   "repository": {
     "type": "git",
@@ -39,7 +39,10 @@
     "middleware",
     "transformer",
     "alerting",
-    "redaction"
+    "redaction",
+    "voltlog-io",
+    "voltlog",
+    "volt-logger"
   ],
   "author": "Rohit Tiwari <rohit@rohittiwari.me>",
   "homepage": "https://github.com/rohittiwari-dev/voltlog-io#readme",
@@ -47,6 +50,9 @@
     "url": "https://github.com/rohittiwari-dev/voltlog-io/issues"
   },
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@paralleldrive/cuid2": "^3.3.0"
   },
