@@ -12,15 +12,15 @@ Thank you for your interest in contributing! We use strict controls to ensure co
     - Example: `fix(middleware): resolve null pointer in ip middleware`
     - Your commit will be rejected if it doesn't follow this format!
 4.  **Changeset**: If your change affects the release (new feature, bug fix), you **MUST** create a changeset.
-    - Run: `bun run changeset`
+    - Run: `npm run changeset`
     - Select the type of change (patch/minor/major).
     - Write a summary.
 5.  **Push & PR**: Push your branch and open a Pull Request.
 
-> **Note**: This project uses **Bun**. Please do not commit `package-lock.json` or `yarn.lock`. Use `bun install` to update dependencies.
+> **Note**: This project uses **Bun**. Please do not commit `package-lock.json` or `yarn.lock`. Use `npm install` to update dependencies.
 
 ## Release Process (Maintainers)
 
 1.  Run `npm run version` to bump versions based on changesets.
 2.  Push changes (this updates `CHANGELOG.md`).
-3.  Run `bun run release` to publish to npm.
+3.  Run `npm run release` to publish to npm.
