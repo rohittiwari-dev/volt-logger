@@ -7,7 +7,7 @@
  * > Recommended for server-side use only.
  */
 
-import type { LogLevelName, Transformer } from "../core/types.js";
+import type { LogLevelName, Transport } from "../core/types.js";
 
 export interface DatadogTransportOptions {
   /** Datadog API Key */
@@ -31,9 +31,7 @@ export interface DatadogTransportOptions {
  * Uses built-in batching (not implemented here for brevity, typically would use batchTransport wrapper).
  * This implementation sends immediately for simplicity or relies on `batchTransport` composition.
  */
-export function datadogTransport(
-  options: DatadogTransportOptions,
-): Transformer {
+export function datadogTransport(options: DatadogTransportOptions): Transport {
   const {
     apiKey,
     site = "datadoghq.com",
@@ -48,7 +46,7 @@ export function datadogTransport(
   return {
     name: "datadog",
     level,
-    async transform(entry) {
+    async write(entry) {
       const payload = {
         ddsource: ddSource,
         ddtags: tags,

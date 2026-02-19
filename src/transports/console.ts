@@ -17,7 +17,7 @@ import {
   type LogEntry,
   LogLevel,
   type LogLevelName,
-  type Transformer,
+  type Transport,
 } from "../core/types.js";
 
 export interface ConsoleTransportOptions {
@@ -36,11 +36,11 @@ export interface ConsoleTransportOptions {
 }
 
 /**
- * Create a console transformer. Outputs structured JSON to the console.
+ * Create a console transport. Outputs structured JSON to the console.
  */
 export function consoleTransport(
   options: ConsoleTransportOptions = {},
-): Transformer {
+): Transport {
   const useConsoleLevels = options.useConsoleLevels ?? true;
   const formatter =
     options.formatter ?? ((entry: LogEntry) => JSON.stringify(entry));
@@ -48,7 +48,7 @@ export function consoleTransport(
   return {
     name: "console",
     level: options.level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       const output = formatter(entry);
 
       if (!useConsoleLevels) {

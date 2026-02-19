@@ -27,7 +27,7 @@
  * ```
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface JsonStreamTransportOptions {
   /** Writable stream to output to (e.g. fs.createWriteStream, process.stdout) */
@@ -42,11 +42,11 @@ export interface JsonStreamTransportOptions {
 }
 
 /**
- * Create a JSON stream transformer that writes newline-delimited JSON.
+ * Create a JSON stream transport that writes newline-delimited JSON.
  */
 export function jsonStreamTransport(
   options: JsonStreamTransportOptions,
-): Transformer {
+): Transport {
   const stream = options.stream;
   const serialize =
     options.serializer ?? ((entry: LogEntry) => `${JSON.stringify(entry)}\n`);
@@ -54,7 +54,7 @@ export function jsonStreamTransport(
   return {
     name: "json-stream",
     level: options.level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       const data = serialize(entry);
       stream.write(data);
     },

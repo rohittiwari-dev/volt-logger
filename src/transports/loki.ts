@@ -7,7 +7,7 @@
  * > Recommended for server-side use.
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface LokiTransportOptions {
   /** Loki URL (e.g. http://localhost:3100) */
@@ -32,7 +32,7 @@ export interface LokiTransportOptions {
  * Pushes logs to Grafana Loki via HTTP API.
  * Uses batching to improve performance.
  */
-export function lokiTransport(options: LokiTransportOptions): Transformer {
+export function lokiTransport(options: LokiTransportOptions): Transport {
   const { host, labels = { app: "voltlog" }, level } = options;
   const batchSize = options.batchSize ?? 10;
   const interval = options.interval ?? 5000;
@@ -96,7 +96,7 @@ export function lokiTransport(options: LokiTransportOptions): Transformer {
   return {
     name: "loki",
     level,
-    transform(entry) {
+    write(entry) {
       buffer.push(entry);
       if (buffer.length >= batchSize) {
         if (timer) clearTimeout(timer);

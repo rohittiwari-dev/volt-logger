@@ -35,7 +35,7 @@
 
 import { createId } from "@paralleldrive/cuid2";
 import { resolveLevel, shouldIncludeStack, shouldLog } from "./levels.js";
-import { composeMiddleware, fanOutToTransformers } from "./pipeline.js";
+import { composeMiddleware, fanOutToTransports } from "./pipeline.js";
 import type {
   LogEntry,
   LogError,
@@ -43,14 +43,14 @@ import type {
   LoggerOptions,
   LogLevelName,
   LogMiddleware,
-  Transformer,
+  Transport,
 } from "./types.js";
 
 // ─── Logger Implementation ──────────────────────────────────────
 
 class LoggerImpl<TMeta = Record<string, unknown>> implements Logger<TMeta> {
   private _level: number;
-  private _transports: Transformer<TMeta>[];
+  private _transports: Transport<TMeta>[];
   private _middlewareList: LogMiddleware<TMeta>[];
   private _pipeline: (entry: LogEntry<TMeta>) => void;
   private _context: Record<string, unknown>;
@@ -117,11 +117,11 @@ class LoggerImpl<TMeta = Record<string, unknown>> implements Logger<TMeta> {
 
   // ─── Dynamic Configuration ─────────────────────────────────
 
-  addTransformer(transformer: Transformer<TMeta>): void {
-    this._transports.push(transformer);
+  addTransport(transport: Transport<TMeta>): void {
+    this._transports.push(transport);
   }
 
-  removeTransformer(name: string): void {
+  removeTransport(name: string): void {
     this._transports = this._transports.filter((t) => t.name !== name);
   }
 
@@ -192,7 +192,7 @@ class LoggerImpl<TMeta = Record<string, unknown>> implements Logger<TMeta> {
 
   private _buildPipeline(): (entry: LogEntry<TMeta>) => void {
     return composeMiddleware(this._middlewareList, (entry) => {
-      fanOutToTransformers(entry, this._transports, this._level);
+      fanOutToTransports(entry, this._transports, this._level);
     });
   }
 }
@@ -277,11 +277,11 @@ class ChildLoggerImpl<TMeta = Record<string, unknown>>
     });
   }
 
-  addTransformer(transformer: Transformer<TMeta>): void {
-    this._parent.addTransformer(transformer);
+  addTransport(transport: Transport<TMeta>): void {
+    this._parent.addTransport(transport);
   }
-  removeTransformer(name: string): void {
-    this._parent.removeTransformer(name);
+  removeTransport(name: string): void {
+    this._parent.removeTransport(name);
   }
   addMiddleware(middleware: LogMiddleware<TMeta>): void {
     this._parent.addMiddleware(middleware);

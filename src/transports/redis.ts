@@ -51,7 +51,7 @@
  * ```
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 /**
  * Minimal interface for the Redis client methods we need.
@@ -83,12 +83,12 @@ export interface RedisTransportOptions {
 }
 
 /**
- * Create a Redis Streams transformer.
+ * Create a Redis Streams transport.
  *
  * Publishes each log entry via XADD to a Redis Stream.
  * Fire-and-forget — errors are silently swallowed to avoid blocking.
  */
-export function redisTransport(options: RedisTransportOptions): Transformer {
+export function redisTransport(options: RedisTransportOptions): Transport {
   const { client, streamKey = "logs", maxLen, level } = options;
 
   const fieldMapper = options.fieldMapper ?? defaultFieldMapper;
@@ -112,7 +112,7 @@ export function redisTransport(options: RedisTransportOptions): Transformer {
   return {
     name: "redis",
     level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       const fields = fieldMapper(entry);
       const args: (string | number)[] = [streamKey];
 

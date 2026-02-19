@@ -7,7 +7,7 @@
  * > Recommended for server-side use only.
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface DiscordTransportOptions {
   /** Discord Webhook URL */
@@ -24,15 +24,13 @@ export interface DiscordTransportOptions {
  * Sends formatted embeds to Discord.
  * Best used for Alerts/Errors.
  */
-export function discordTransport(
-  options: DiscordTransportOptions,
-): Transformer {
+export function discordTransport(options: DiscordTransportOptions): Transport {
   const { webhookUrl, username, avatarUrl, level = "ERROR" } = options;
 
   return {
     name: "discord",
     level,
-    async transform(entry) {
+    async write(entry) {
       try {
         await fetch(webhookUrl, {
           method: "POST",

@@ -86,21 +86,21 @@ export interface OcppExchangeMeta {
   status?: string;
 }
 
-// ─── Transformer ─────────────────────────────────────────────────
+// ─── Transport ─────────────────────────────────────────────────
 
 /**
- * A Transformer receives formatted log entries and delivers them
+ * A Transport receives formatted log entries and delivers them
  * to a destination (console, file, webhook, database, etc.).
  *
- * Transformers are async-safe — `transform()` can return a Promise.
+ * Transports are async-safe — `write()` can return a Promise.
  */
-export interface Transformer<TMeta = Record<string, unknown>> {
-  /** Unique name for this transformer */
+export interface Transport<TMeta = Record<string, unknown>> {
+  /** Unique name for this transport */
   name: string;
-  /** Optional per-transformer level filter */
+  /** Optional per-transport level filter */
   level?: LogLevelName;
   /** Process a log entry */
-  transform(entry: LogEntry<TMeta>): void | Promise<void>;
+  write(entry: LogEntry<TMeta>): void | Promise<void>;
   /** Flush any buffered entries */
   flush?(): void | Promise<void>;
   /** Graceful shutdown */
@@ -110,7 +110,7 @@ export interface Transformer<TMeta = Record<string, unknown>> {
 // ─── Middleware ───────────────────────────────────────────────────
 
 /**
- * Middleware intercepts log entries before they reach transformers.
+ * Middleware intercepts log entries before they reach transports.
  * Used for redaction, sampling, enrichment, alerting, etc.
  *
  * Call `next(entry)` to continue the pipeline.
@@ -147,8 +147,8 @@ export interface AlertRule<TMeta = Record<string, unknown>> {
 export interface LoggerOptions<TMeta = Record<string, unknown>> {
   /** Minimum log level (default: INFO) */
   level?: LogLevelName;
-  /** Transformers for log output */
-  transports?: Transformer<TMeta>[];
+  /** Transports for log output */
+  transports?: Transport<TMeta>[];
   /** Middleware pipeline */
   middleware?: LogMiddleware<TMeta>[];
   /** Alert rules */
@@ -197,15 +197,15 @@ export interface Logger<TMeta = Record<string, unknown>> {
   /** Create a child logger with additional bound context */
   child(context: Record<string, unknown>): Logger<TMeta>;
 
-  /** Add a transformer at runtime */
-  addTransformer(transformer: Transformer<TMeta>): void;
-  /** Remove a transformer by name */
-  removeTransformer(name: string): void;
+  /** Add a transport at runtime */
+  addTransport(transport: Transport<TMeta>): void;
+  /** Remove a transport by name */
+  removeTransport(name: string): void;
   /** Add middleware at runtime */
   addMiddleware(middleware: LogMiddleware<TMeta>): void;
 
-  /** Flush all transformers */
+  /** Flush all transports */
   flush(): Promise<void>;
-  /** Close all transformers gracefully */
+  /** Close all transports gracefully */
   close(): Promise<void>;
 }

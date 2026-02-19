@@ -8,7 +8,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface FileTransportOptions {
   /** Directory to store logs. Created if missing. */
@@ -23,10 +23,10 @@ export interface FileTransportOptions {
 }
 
 /**
- * Creates a file transformer that writes newline-delimited JSON.
+ * Creates a file transport that writes newline-delimited JSON.
  * Rotates files daily based on the `%DATE%` pattern.
  */
-export function fileTransport(options: FileTransportOptions): Transformer {
+export function fileTransport(options: FileTransportOptions): Transport {
   const { dir, level } = options;
   const filenamePattern = options.filename ?? "app-%DATE%.log";
 
@@ -70,7 +70,7 @@ export function fileTransport(options: FileTransportOptions): Transformer {
   return {
     name: "file",
     level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       // Check rotation on every write (low overhead string comparison)
       // For extremely high throughput, this could be optimized to check only every N writes or every few seconds
       rotate();

@@ -35,7 +35,7 @@ import {
   LogLevel,
   type LogLevelName,
   type OcppExchangeMeta,
-  type Transformer,
+  type Transport,
 } from "../core/types.js";
 
 export interface PrettyTransportOptions {
@@ -83,12 +83,12 @@ const DIRECTION_ARROWS: Record<string, string> = {
 };
 
 /**
- * Create a pretty-print transformer for dev/debug use.
+ * Create a pretty-print transport for dev/debug use.
  * Includes OCPP exchange log prettification.
  */
 export function prettyTransport(
   options: PrettyTransportOptions = {},
-): Transformer {
+): Transport {
   const showTimestamps = options.timestamps ?? true;
   const useColors = options.colors ?? true;
 
@@ -164,7 +164,7 @@ export function prettyTransport(
   return {
     name: "pretty",
     level: options.level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       // Try exchange format first
       const exchangeOutput = formatExchange(entry);
       if (exchangeOutput) {

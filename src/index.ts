@@ -24,7 +24,7 @@ export {
   LogLevelValueMap,
   type LogMiddleware,
   type OcppExchangeMeta,
-  type Transformer,
+  type Transport,
 } from "./core/types.js";
 export {
   type AiEnrichmentOptions,
@@ -68,57 +68,51 @@ export {
 export {
   type BatchTransportOptions,
   batchTransport,
-} from "./transformers/batch.js";
+} from "./transports/batch.js";
 export {
   type BrowserJsonStreamTransportOptions,
   browserJsonStreamTransport,
-} from "./transformers/browser-json-stream.js";
-// ─── Transformers ────────────────────────────────────────────────
+} from "./transports/browser-json-stream.js";
+// ─── Transports ────────────────────────────────────────────────
 export {
   type ConsoleTransportOptions,
   consoleTransport,
-} from "./transformers/console.js";
-// Extended Transformers
-export { createTransformer } from "./transformers/create-transformer.js";
+} from "./transports/console.js";
+// Extended Transports
+export { createTransport } from "./transports/create-transport.js";
 export {
   type DatadogTransportOptions,
   datadogTransport,
-} from "./transformers/datadog.js";
+} from "./transports/datadog.js";
 export {
   type DiscordTransportOptions,
   discordTransport,
-} from "./transformers/discord.js";
-export {
-  type FileTransportOptions,
-  fileTransport,
-} from "./transformers/file.js";
+} from "./transports/discord.js";
+export { type FileTransportOptions, fileTransport } from "./transports/file.js";
 export {
   type JsonStreamTransportOptions,
   jsonStreamTransport,
-} from "./transformers/json-stream.js";
-export {
-  type LokiTransportOptions,
-  lokiTransport,
-} from "./transformers/loki.js";
+} from "./transports/json-stream.js";
+export { type LokiTransportOptions, lokiTransport } from "./transports/loki.js";
 export {
   type PrettyTransportOptions,
   prettyTransport,
-} from "./transformers/pretty.js";
+} from "./transports/pretty.js";
 export {
   type RedisClient,
   type RedisTransportOptions,
   redisTransport,
-} from "./transformers/redis.js";
+} from "./transports/redis.js";
 export {
   type SentryInstance,
   type SentryTransportOptions,
   sentryTransport,
-} from "./transformers/sentry.js";
+} from "./transports/sentry.js";
 export {
   type SlackTransportOptions,
   slackTransport,
-} from "./transformers/slack.js";
+} from "./transports/slack.js";
 export {
   type WebhookTransportOptions,
   webhookTransport,
-} from "./transformers/webhook.js";
+} from "./transports/webhook.js";

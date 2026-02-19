@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LogEntry } from "../src/core/types.js";
-import { webhookTransport } from "../src/transformers/webhook.js";
+import { webhookTransport } from "../src/transports/webhook.js";
 
 // Mock fetch
 const fetchMock = vi.fn();
@@ -32,7 +32,7 @@ describe("Validating Webhook Transport", () => {
       batchSize: 1,
     });
 
-    transport.transform(mockEntry);
+    transport.write(mockEntry);
     await (vi as any).runAllTimersAsync();
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -51,8 +51,8 @@ describe("Validating Webhook Transport", () => {
       batchSize: 2,
     });
 
-    transport.transform(mockEntry); // 1
-    transport.transform({ ...mockEntry, id: "2" }); // 2
+    transport.write(mockEntry); // 1
+    transport.write({ ...mockEntry, id: "2" }); // 2
 
     await (vi as any).runAllTimersAsync();
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -72,7 +72,7 @@ describe("Validating Webhook Transport", () => {
       maxRetries: 2,
     });
 
-    transport.transform(mockEntry);
+    transport.write(mockEntry);
     await (vi as any).runAllTimersAsync(); // Initial call
 
     // Retry delay is exp backoff: 1000ms
@@ -87,14 +87,14 @@ describe("Validating Webhook Transport", () => {
       batchSize: 10,
     });
 
-    transport.transform(mockEntry);
+    transport.write(mockEntry);
     expect(fetchMock).not.toHaveBeenCalled();
 
     await transport.flush!();
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     // Close should also flush
-    transport.transform(mockEntry);
+    transport.write(mockEntry);
     await transport.close!();
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
@@ -107,7 +107,7 @@ describe("Validating Webhook Transport", () => {
       maxRetries: 1, // 1 retry
     });
 
-    transport.transform(mockEntry);
+    transport.write(mockEntry);
 
     await (vi as any).runAllTimersAsync(); // Initial
     await (vi as any).advanceTimersByTimeAsync(2000); // Retry

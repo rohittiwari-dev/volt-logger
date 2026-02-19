@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LogEntry } from "../src/core/types.js";
-import { discordTransport } from "../src/transformers/discord.js";
+import { discordTransport } from "../src/transports/discord.js";
 
 // Mock fetch
 const fetchMock = vi.fn();
 global.fetch = fetchMock;
 
-describe("Discord Transformer", () => {
+describe("Discord Transport", () => {
   const mockEntry: LogEntry = {
     id: "test-id",
     level: 50,
@@ -27,7 +27,7 @@ describe("Discord Transformer", () => {
     const transport = discordTransport({
       webhookUrl: "https://discord.com/hook",
     });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
@@ -43,7 +43,7 @@ describe("Discord Transformer", () => {
     const transport = discordTransport({
       webhookUrl: "https://discord.com/hook",
     });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
     expect(body.embeds).toBeDefined();
@@ -66,7 +66,7 @@ describe("Discord Transformer", () => {
       username: "Bot",
       avatarUrl: "https://example.com/avatar.png",
     });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
     expect(body.username).toBe("Bot");
@@ -79,6 +79,6 @@ describe("Discord Transformer", () => {
       webhookUrl: "https://discord.com/hook",
     });
 
-    await expect(transport.transform(mockEntry)).resolves.not.toThrow();
+    await expect(transport.write(mockEntry)).resolves.not.toThrow();
   });
 });

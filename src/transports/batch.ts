@@ -16,7 +16,7 @@
  * ```
  */
 
-import type { LogEntry, Transformer } from "../core/types.js";
+import type { LogEntry, Transport } from "../core/types.js";
 
 export interface BatchTransportOptions {
   /** Number of entries to buffer before flushing (default: 100) */
@@ -26,13 +26,13 @@ export interface BatchTransportOptions {
 }
 
 /**
- * Wrap any transformer with batching. Entries are buffered and flushed
+ * Wrap any transport with batching. Entries are buffered and flushed
  * either when the batch is full or the timer fires.
  */
 export function batchTransport(
-  inner: Transformer,
+  inner: Transport,
   options: BatchTransportOptions = {},
-): Transformer {
+): Transport {
   const batchSize = options.batchSize ?? 100;
   const flushIntervalMs = options.flushIntervalMs ?? 5000;
 
@@ -53,7 +53,7 @@ export function batchTransport(
     buffer = [];
     for (const entry of batch) {
       try {
-        const result = inner.transform(entry);
+        const result = inner.write(entry);
         if (result && typeof (result as Promise<void>).catch === "function") {
           (result as Promise<void>).catch(() => {});
         }
@@ -66,7 +66,7 @@ export function batchTransport(
   return {
     name: `batch(${inner.name})`,
     level: inner.level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       buffer.push(entry);
       if (buffer.length >= batchSize) {
         doFlush();

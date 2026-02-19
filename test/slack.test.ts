@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LogEntry } from "../src/core/types.js";
-import { slackTransport } from "../src/transformers/slack.js";
+import { slackTransport } from "../src/transports/slack.js";
 
 // Mock fetch
 const fetchMock = vi.fn();
 global.fetch = fetchMock;
 
-describe("Slack Transformer", () => {
+describe("Slack Transport", () => {
   const mockEntry: LogEntry = {
     id: "test-id",
     level: 50,
@@ -25,7 +25,7 @@ describe("Slack Transformer", () => {
 
   it("should send POST request to webhookUrl", async () => {
     const transport = slackTransport({ webhookUrl: "https://slack.com/hook" });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
@@ -44,7 +44,7 @@ describe("Slack Transformer", () => {
 
   it("should format payload correctly with blocks", async () => {
     const transport = slackTransport({ webhookUrl: "https://slack.com/hook" });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
 
@@ -78,7 +78,7 @@ describe("Slack Transformer", () => {
       username: "Bot",
       iconEmoji: ":robot_face:",
     });
-    await transport.transform(mockEntry);
+    await transport.write(mockEntry);
 
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
     expect(body.username).toBe("Bot");
@@ -90,7 +90,7 @@ describe("Slack Transformer", () => {
     const transport = slackTransport({ webhookUrl: "https://slack.com/hook" });
 
     // Should not throw
-    await expect(transport.transform(mockEntry)).resolves.not.toThrow();
+    await expect(transport.write(mockEntry)).resolves.not.toThrow();
   });
 
   it("should handle non-200 response gracefully", async () => {
@@ -98,6 +98,6 @@ describe("Slack Transformer", () => {
     const transport = slackTransport({ webhookUrl: "https://slack.com/hook" });
 
     // Should not throw
-    await expect(transport.transform(mockEntry)).resolves.not.toThrow();
+    await expect(transport.write(mockEntry)).resolves.not.toThrow();
   });
 });

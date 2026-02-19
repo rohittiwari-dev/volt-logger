@@ -5,7 +5,7 @@
  * Useful for streaming logs in browser environments (e.g. to `fetch` streams or ServiceWorkers).
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface BrowserJsonStreamTransportOptions {
   /**
@@ -23,11 +23,11 @@ export interface BrowserJsonStreamTransportOptions {
 }
 
 /**
- * Create a JSON stream transformer for browsers that writes to a WritableStream.
+ * Create a JSON stream transport for browsers that writes to a WritableStream.
  */
 export function browserJsonStreamTransport(
   options: BrowserJsonStreamTransportOptions,
-): Transformer {
+): Transport {
   const stream = options.stream;
   const writer = stream.getWriter();
 
@@ -37,7 +37,7 @@ export function browserJsonStreamTransport(
   return {
     name: "browser-stream",
     level: options.level,
-    async transform(entry: LogEntry): Promise<void> {
+    async write(entry: LogEntry): Promise<void> {
       try {
         const data = serialize(entry);
         await writer.ready;

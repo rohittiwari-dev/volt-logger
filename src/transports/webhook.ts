@@ -21,7 +21,7 @@
  * ```
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface WebhookTransportOptions {
   /** Target URL to POST log entries to */
@@ -45,11 +45,9 @@ export interface WebhookTransportOptions {
 }
 
 /**
- * Create a webhook transformer that POSTs log entries to an HTTP endpoint.
+ * Create a webhook transport that POSTs log entries to an HTTP endpoint.
  */
-export function webhookTransport(
-  options: WebhookTransportOptions,
-): Transformer {
+export function webhookTransport(options: WebhookTransportOptions): Transport {
   const {
     url,
     method = "POST",
@@ -118,7 +116,7 @@ export function webhookTransport(
   return {
     name: "webhook",
     level: options.level,
-    transform(entry: LogEntry): void {
+    write(entry: LogEntry): void {
       buffer.push(entry);
 
       if (buffer.length >= batchSize) {

@@ -8,7 +8,7 @@
  * Best used with a filter (e.g. ERROR only) or alert middleware.
  */
 
-import type { LogEntry, LogLevelName, Transformer } from "../core/types.js";
+import type { LogEntry, LogLevelName, Transport } from "../core/types.js";
 
 export interface SlackTransportOptions {
   /** Slack Incoming Webhook URL */
@@ -25,13 +25,13 @@ export interface SlackTransportOptions {
  * Sends logs to Slack with formatting.
  * Best suited for ERROR/FATAL logs or specific alerts.
  */
-export function slackTransport(options: SlackTransportOptions): Transformer {
+export function slackTransport(options: SlackTransportOptions): Transport {
   const { webhookUrl, username, iconEmoji, level } = options;
 
   return {
     name: "slack",
     level: level ?? "ERROR", // Default to ERROR to prevent spamming
-    async transform(entry: LogEntry): Promise<void> {
+    async write(entry: LogEntry): Promise<void> {
       try {
         const payload = formatSlackMessage(entry, username, iconEmoji);
         const response = await fetch(webhookUrl, {

@@ -4,7 +4,7 @@
  * @universal Works in both Server and Browser (depends on provided Sentry instance).
  */
 
-import type { LogLevelName, Transformer } from "../core/types.js";
+import type { LogLevelName, Transport } from "../core/types.js";
 
 /**
  * Minimal Sentry client interface to avoid hard dependency on @sentry/* packages.
@@ -33,14 +33,14 @@ import { resolveLevel } from "../core/levels.js";
  * - Logs >= errorLevel -> sent as Exceptions
  * - Logs >= breadcrumbLevel -> sent as Breadcrumbs
  */
-export function sentryTransport(options: SentryTransportOptions): Transformer {
+export function sentryTransport(options: SentryTransportOptions): Transport {
   const { sentry } = options;
   const errorLevelValue = resolveLevel(options.errorLevel ?? "ERROR");
   const breadcrumbLevelValue = resolveLevel(options.breadcrumbLevel ?? "INFO");
 
   return {
     name: "sentry",
-    transform(entry) {
+    write(entry) {
       // 1. Send as Exception if >= errorLevel
       if (entry.level >= errorLevelValue) {
         if (entry.error) {
